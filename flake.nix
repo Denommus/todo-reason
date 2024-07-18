@@ -14,8 +14,8 @@
         ocaml-overlay.overlays.default
       ];
     };
-  in {
-    packages.default = pkgs.ocamlPackages.buildDunePackage {
+
+    package = pkgs.ocamlPackages.buildDunePackage {
       duneVersion = "3";
       version = "0.1";
       pname = "todo-reason";
@@ -28,6 +28,11 @@
         pkgs.ocamlPackages.melange
         pkgs.ocamlPackages.reason
       ];
+
+      src = ./.;
     };
+  in {
+    packages.default = package;
+    packages.todo-reason = package;
   });
 }
