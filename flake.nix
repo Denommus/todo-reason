@@ -15,22 +15,7 @@
       ];
     };
 
-    package = pkgs.ocamlPackages.buildDunePackage {
-      duneVersion = "3";
-      version = "0.1";
-      pname = "todo-reason";
-
-      buildInputs = [
-        pkgs.ocamlPackages.reason-react
-      ];
-
-      nativeBuildInputs = [
-        pkgs.ocamlPackages.melange
-        pkgs.ocamlPackages.reason
-      ];
-
-      src = ./.;
-    };
+    package = pkgs.callPackage ./todo-reason.nix { };
   in {
     packages.default = package;
     packages.todo-reason = package;
