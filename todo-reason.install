@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/todo-reason/META"
+  "_build/install/default/lib/todo-reason/dune-package"
+  "_build/install/default/lib/todo-reason/opam"
+]
+doc: [
+  "_build/install/default/doc/todo-reason/LICENSE"
+]
