@@ -5,4 +5,5 @@ lib: [
 ]
 doc: [
   "_build/install/default/doc/todo-reason/LICENSE"
+  "_build/install/default/doc/todo-reason/README.org"
 ]

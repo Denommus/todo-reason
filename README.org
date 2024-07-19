@@ -1,0 +1,35 @@
+* Todo App
+
+This app is meant as a small hello world for those who want to use
+ReactReason with nix, and maybe direnv
+
+** Usage
+
+If you use direnv, just =direnv allow= and do
+
+#+begin_src sh
+  npm install
+#+end_src
+
+Then
+
+#+begin_src sh
+  npm run watch
+#+end_src
+
+In one screen and in another screen do
+
+#+begin_src sh
+  npm run serve
+#+end_src
+
+If you don't use direnv, first do
+
+#+begin_src sh
+  nix develop
+#+end_src
+
+If you don't use nix, you need to setup nodejs, npm, and opam. I don't
+know how to setup those manually, so good luck with that (You can open
+a PR to this documentation if you know how to setup everything
+manually).
