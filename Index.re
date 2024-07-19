@@ -1,6 +1,86 @@
+type todo_item = {
+  id: int,
+  contents: string,
+  done_: bool,
+};
+
+let setItemDone = (items, i) => {
+  let itemsCopy = Array.copy(items);
+  let oldItem = itemsCopy[i];
+  let newItem = {
+    id: oldItem.id,
+    contents: oldItem.contents,
+    done_: !oldItem.done_,
+  };
+  itemsCopy[i] = newItem;
+  itemsCopy;
+};
+
 module App = {
   [@react.component]
-  let make = () => <h1> {React.string("Welcome to my app!")} </h1>;
+  let make = () => {
+    let (input, setInput) = React.useState(() => "");
+    let (items, setItems) = React.useState(() => [||]);
+
+    let renderedItems =
+      Array.mapi(
+        (i, item) => {
+          let style =
+            item.done_
+              ? ReactDOM.Style.make(~textDecoration="line-through", ())
+              : ReactDOM.Style.make();
+
+          <li key={string_of_int(item.id)} style>
+            {React.string(item.contents)}
+            <input
+              type_="checkbox"
+              checked={item.done_}
+              onChange={_ => setItems(items => setItemDone(items, i))}
+            />
+          </li>;
+        },
+        items,
+      )
+      |> React.array;
+
+    <>
+      <h1> {React.string("Todo App")} </h1>
+      <input
+        type_="string"
+        value=input
+        onChange={event => setInput(React.Event.Form.target(event)##value)}
+      />
+      <button
+        onClick={_event => {
+          setItems(items => {
+            let id =
+              Array.length(items) == 0
+                ? 1 : 1 + items[Array.length(items) - 1].id;
+
+            Array.append(items, [|{id, contents: input, done_: false}|]);
+          });
+          setInput(_ => "");
+        }}>
+        {React.string("Add")}
+      </button>
+      <ul> renderedItems </ul>
+      <button
+        onClick={_ =>
+          // OCaml doen't provide an Array.filter, so implementing it manually with fold_left
+
+            setItems(items =>
+              Array.fold_left(
+                (newItems, item) =>
+                  item.done_ ? newItems : Array.append(newItems, [|item|]),
+                [||],
+                items,
+              )
+            )
+          }>
+        {React.string("Clear")}
+      </button>
+    </>;
+  };
 };
 
 let node = ReactDOM.querySelector("#root");
