@@ -19,5 +19,16 @@
   in {
     packages.default = package;
     packages.todo-reason = package;
+
+    devShells.default = pkgs.mkShell {
+      inputsFrom = [
+        package
+      ];
+
+      buildInputs = [
+        pkgs.ocamlPackages.ocaml-lsp
+        pkgs.ocamlPackages.utop
+      ];
+    };
   });
 }
