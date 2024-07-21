@@ -28,6 +28,7 @@
       buildInputs = [
         pkgs.ocamlPackages.ocaml-lsp
         pkgs.ocamlPackages.utop
+        pkgs.ocamlPackages.ocamlformat
         pkgs.nodejs
       ];
     };
