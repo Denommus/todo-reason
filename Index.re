@@ -74,6 +74,7 @@ module App = {
         onChange={event => setInput(React.Event.Form.target(event)##value)}
       />
       <button
+        disabled={input == ""}
         onClick={_event => {
           setItems(items => {
             let id =
