@@ -16,12 +16,9 @@ let setItemDone = (items, i) => {
   itemsCopy;
 };
 
-module App = {
+module TodoList = {
   [@react.component]
-  let make = () => {
-    let (input, setInput) = React.useState(() => "");
-    let (items, setItems) = React.useState(() => [||]);
-
+  let make = (~items, ~setItems, ()) => {
     let renderedItems =
       Array.mapi(
         (i, item) => {
@@ -42,6 +39,32 @@ module App = {
         items,
       )
       |> React.array;
+    <>
+      <ul> renderedItems </ul>
+      <button
+        onClick={_ =>
+          // OCaml doen't provide an Array.filter, so implementing it manually with fold_left
+
+            setItems(items =>
+              Array.fold_left(
+                (newItems, item) =>
+                  item.done_ ? newItems : Array.append(newItems, [|item|]),
+                [||],
+                items,
+              )
+            )
+          }>
+        {React.string("Clear")}
+      </button>
+    </>;
+  };
+};
+
+module App = {
+  [@react.component]
+  let make = () => {
+    let (input, setInput) = React.useState(() => "");
+    let (items, setItems) = React.useState(() => [||]);
 
     <>
       <h1> {React.string("Todo App")} </h1>
@@ -63,22 +86,7 @@ module App = {
         }}>
         {React.string("Add")}
       </button>
-      <ul> renderedItems </ul>
-      <button
-        onClick={_ =>
-          // OCaml doen't provide an Array.filter, so implementing it manually with fold_left
-
-            setItems(items =>
-              Array.fold_left(
-                (newItems, item) =>
-                  item.done_ ? newItems : Array.append(newItems, [|item|]),
-                [||],
-                items,
-              )
-            )
-          }>
-        {React.string("Clear")}
-      </button>
+      <TodoList items setItems />
     </>;
   };
 };
