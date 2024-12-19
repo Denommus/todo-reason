@@ -66,7 +66,7 @@ module App = {
     let (input, setInput) = React.useState(() => "");
     let (items, setItems) = React.useState(() => [||]);
 
-    <>
+    <div>
       <h1> {React.string("Todo App")} </h1>
       <input
         type_="string"
@@ -88,7 +88,7 @@ module App = {
         {React.string("Add")}
       </button>
       <TodoList items setItems />
-    </>;
+    </div>;
   };
 };
 
