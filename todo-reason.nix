@@ -1,5 +1,10 @@
-{ ocamlPackages }:
-ocamlPackages.buildDunePackage {
+{
+  buildDunePackage,
+  reason-react,
+  melange,
+  reason,
+}:
+buildDunePackage {
   pname = "todo-reason";
   version = "0.1";
 
@@ -8,11 +13,11 @@ ocamlPackages.buildDunePackage {
   duneVersion = "3";
 
   buildInputs = [
-    ocamlPackages.reason-react
+    reason-react
   ];
 
   nativeBuildInputs = [
-    ocamlPackages.melange
-    ocamlPackages.reason
+    melange
+    reason
   ];
 }
