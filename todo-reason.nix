@@ -1,6 +1,7 @@
 {
   buildDunePackage,
   reason-react,
+  reason-react-ppx,
   melange,
   reason,
 }:
@@ -14,6 +15,7 @@ buildDunePackage {
 
   buildInputs = [
     reason-react
+    reason-react-ppx
   ];
 
   nativeBuildInputs = [
