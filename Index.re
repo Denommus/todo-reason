@@ -42,18 +42,7 @@ module TodoList = {
     <>
       <ul> renderedItems </ul>
       <button
-        onClick={_ =>
-          // OCaml doen't provide an Array.filter, so implementing it manually with fold_left
-
-            setItems(items =>
-              Array.fold_left(
-                (newItems, item) =>
-                  item.done_ ? newItems : Array.append(newItems, [|item|]),
-                [||],
-                items,
-              )
-            )
-          }>
+        onClick={_ => setItems(Js.Array.filter(~f=item => !item.done_))}>
         {React.string("Clear")}
       </button>
     </>;
@@ -81,7 +70,16 @@ module App = {
               Array.length(items) == 0
                 ? 1 : 1 + items[Array.length(items) - 1].id;
 
-            Array.append(items, [|{id, contents: input, done_: false}|]);
+            Array.append(
+              items,
+              [|
+                {
+                  id,
+                  contents: input,
+                  done_: false,
+                },
+              |],
+            );
           });
           setInput(_ => "");
         }}>
