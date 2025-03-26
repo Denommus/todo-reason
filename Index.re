@@ -55,36 +55,38 @@ module App = {
     let (input, setInput) = React.useState(() => "");
     let (items, setItems) = React.useState(() => [||]);
 
+    let onSubmit = e => {
+      React.Event.Form.preventDefault(e);
+      if (input != "") {
+        setItems(items => {
+          let id =
+            Array.length(items) == 0
+              ? 1 : 1 + items[Array.length(items) - 1].id;
+          Array.append(
+            items,
+            [|
+              {
+                id,
+                contents: input,
+                done_: false,
+              },
+            |],
+          );
+        });
+        setInput(_ => "");
+      };
+    };
+
     <div>
       <h1> {React.string("Todo App")} </h1>
-      <input
-        type_="string"
-        value=input
-        onChange={event => setInput(React.Event.Form.target(event)##value)}
-      />
-      <button
-        disabled={input == ""}
-        onClick={_event => {
-          setItems(items => {
-            let id =
-              Array.length(items) == 0
-                ? 1 : 1 + items[Array.length(items) - 1].id;
-
-            Array.append(
-              items,
-              [|
-                {
-                  id,
-                  contents: input,
-                  done_: false,
-                },
-              |],
-            );
-          });
-          setInput(_ => "");
-        }}>
-        {React.string("Add")}
-      </button>
+      <form onSubmit disabled={input == ""}>
+        <input
+          type_="string"
+          value=input
+          onChange={event => setInput(React.Event.Form.target(event)##value)}
+        />
+        <input type_="submit" value="Add" />
+      </form>
       <TodoList items setItems />
     </div>;
   };
